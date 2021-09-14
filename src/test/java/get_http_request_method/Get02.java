@@ -50,6 +50,7 @@ public class Get02 extends HerOkuAppBaseUrl {
         //returns false, you will get green tick
 
         //Expected Data comes from test case, Actual Data comes from API
+        //assertEquals() retusn true if the arguments match
         assertEquals( "Cowboy", response.getHeader("Server"));
 
 
