@@ -1,9 +1,9 @@
 package get_http_request_method;
 
+import io.restassured.response.Response;
 import org.junit.Test;
 
-import io.restassured.response.Response;
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
 
 public class Get01Dt {
     /*
@@ -41,7 +41,24 @@ public class Get01Dt {
         response.prettyPrint();
 
         //4. Step : Do assertion
+        /*
+            If you have multiple errors in your functionality, Java will stop execution after the first error.
+            Because of that, you cannot see any error message for the second, third, etc. errors.
+
+            If the execution stopped after the first error, it is called " Hard Assertion"
+            There is "Soft Assertion (verification)" as well, it does not stop execution after errors. It executes all codes
+            then gives error messages for all errors.
+         */
         response.then().assertThat().statusCode(200).contentType("application/json").statusLine("HTTP/1.1 200 OK");
+
+        //How to  print statuc code, status line, headers, etc. on the console.
+
+        System.out.println("Status code is " +response.getStatusCode());
+        System.out.println("Status line is " +response.getStatusLine());
+        System.out.println("Content code is " +response.getContentType());
+        System.out.println("Headers are \n " +response.getHeaders());
+        System.out.println("Server eaders is " +response.getHeader("Server"));
+        System.out.println("Time is " +response.getTime());
 
     }
 }
