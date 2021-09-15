@@ -3,12 +3,11 @@ package get_http_request_method;
 import base_urls.HerOkuAppBaseUrl;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
-import org.junit.Test;
 import io.restassured.response.Response;
+import org.junit.Test;
+import org.testng.asserts.SoftAssert;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
+import static io.restassured.RestAssured.given;
 
 public class Get06 extends HerOkuAppBaseUrl {
 
@@ -61,13 +60,25 @@ public class Get06 extends HerOkuAppBaseUrl {
                 then().assertThat().statusCode(200).
                 contentType(ContentType.JSON);
 
-        //Create JsonPath object from response object
+        //Create JsonPath object from response object ( Hard Assertion )
         JsonPath json = response.jsonPath();
-        assertEquals ("First name is not matching","Sally", json.getString("firstname"));
-        assertEquals ("Last name is not matching","Smith", json.getString("lastname"));
-        assertEquals ("Total Price is not matching",224, json.getInt("totalprice"));
-        assertEquals ("Deposit Paid value is not matching",true, json.getBoolean("depositpaid"));
-        assertEquals ("Checkin date is not matching","2021-04-12", json.getString("bookingdates.checkin"));
-        assertEquals ("Checkout date is not matching","2021-05-07", json.getString("bookingdates.checkout"));
+//        assertEquals ("First name is not matching","Sally", json.getString("firstname"));
+//        assertEquals ("Last name is not matching","Smith", json.getString("lastname"));
+//        assertEquals ("Total Price is not matching",224, json.getInt("totalprice"));
+//        assertEquals ("Deposit Paid value is not matching",true, json.getBoolean("depositpaid"));
+//        assertEquals ("Checkin date is not matching","2021-04-12", json.getString("bookingdates.checkin"));
+//        assertEquals ("Checkout date is not matching","2021-05-07", json.getString("bookingdates.checkout"));
+
+        //3. Way : Soft Assertion
+        //i) Create SoftAssert Object
+        SoftAssert softAssert = new SoftAssert();
+
+        //ii) By using softAssert object do assertion
+        softAssert.assertEquals(json.getString("firstname"), "Sally", "First name is not matching");
+        softAssert.assertEquals(json.getString("lastname"), "Smith", "Last name is not matching");
+        softAssert.assertEquals(json.getInt("totalprice"), 544, "Total Price is not matching");
+
+        //iii) Do not forget to use assertAll() If you dont use assertAll() you will get green everytime but it is not meaningful
+        softAssert.assertAll();
     }
 }
