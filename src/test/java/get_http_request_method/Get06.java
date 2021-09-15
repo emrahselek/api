@@ -78,7 +78,7 @@ public class Get06 extends HerOkuAppBaseUrl {
         softAssert.assertEquals(json.getString("lastname"), "Smith", "Last name is not matching");
         softAssert.assertEquals(json.getInt("totalprice"), 544, "Total Price is not matching");
 
-        //iii) Do not forget to use assertAll() If you dont use assertAll() you will get green everytime but it is not meaningful
+        //iii) Do not forget to use assertAll() If you don't use assertAll() you will get green everytime but it is not meaningful
         softAssert.assertAll();
     }
 }
