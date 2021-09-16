@@ -4,7 +4,8 @@ import base_urls.HerOkuAppBaseUrl;
 import io.restassured.response.Response;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
+import static org.junit.Assert.*;
 
 public class Get02Dt extends HerOkuAppBaseUrl {
     /*
@@ -36,5 +37,13 @@ public class Get02Dt extends HerOkuAppBaseUrl {
 
         //4. Step : Do assertions
         response.then().assertThat().statusCode(404).statusLine("HTTP/1.1 404 Not Found");
+
+        //aserrtTrue (true) ==> give you passed         aserrtTrue (false) ==> give you failed
+        assertTrue("Body is not containing expected text",response.asString().contains("Not Found"));
+
+        //aserrtFasle (false) ==> give you passed         aserrtFalse (true) ==> give you failed
+        assertFalse("Even the text does not exist in response body, it says exist.",response.asString().contains("TechProEd"));
+
+        assertEquals("Server name is not matching ","Cowboy", response.getHeader("Server"));
     }
 }
