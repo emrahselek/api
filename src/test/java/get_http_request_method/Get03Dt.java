@@ -1,10 +1,12 @@
 package get_http_request_method;
 
 import base_urls.JsonPlaceHolderBaseUrl;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 public class Get03Dt extends JsonPlaceHolderBaseUrl {
     /*
@@ -25,7 +27,7 @@ public class Get03Dt extends JsonPlaceHolderBaseUrl {
      */
 
     @Test
-    public void get02() {
+    public void get03() {
         //1. Step : Set the URL
         spec.pathParams("first", "todos", "second", 23);
 
@@ -34,5 +36,15 @@ public class Get03Dt extends JsonPlaceHolderBaseUrl {
         //3. Step : Send the request and get the response
         Response response = given().spec(spec).when().get("/{first}/{second}");
         response.prettyPrint();
+
+        //4. Step : Do Assertions
+        response.then().assertThat().statusCode(200).contentType(ContentType.JSON)
+                .body("title", equalTo("et itaque necessitatibus maxime molestiae qui quas velit"))
+                .body("completed", equalTo(false)).body("userId",equalTo(2));
+
+        //2.Way :
+        response.then().assertThat().statusCode(200).contentType(ContentType.JSON)
+                .body("title", equalTo("et itaque necessitatibus maxime molestiae qui quas velit"),
+                        "completed", equalTo(false),"userId", equalTo(2));
     }
 }
