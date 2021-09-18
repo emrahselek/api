@@ -1,4 +1,5 @@
 import base_urls.Jsonnn_BaseUrl;
+import io.restassured.http.ContentType;
 import io.restassured.response.*;
 import org.junit.Test;
 
@@ -29,7 +30,7 @@ public class day01 extends Jsonnn_BaseUrl {
         Response response = given().spec(spec).when().get("/{first}/{second}");
         response.prettyPrint();
 
-        response.then().assertThat().statusCode(200);
+        response.then().assertThat().statusCode(200).contentType(ContentType.JSON);
     }
 
 }

@@ -9,6 +9,6 @@ public class Jsonnn_BaseUrl {
     protected RequestSpecification spec;
 
     @Before
-    public void setUp(){ spec = new RequestSpecBuilder().setBaseUri("https://jsonplaceholder.typicode.com").build();
+    public void setUp(){ spec = new RequestSpecBuilder().setBaseUri("https://jsonplaceholder.typicode.com/").build();
     }
 }
