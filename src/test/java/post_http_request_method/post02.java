@@ -49,10 +49,12 @@ public class post02 extends JsonPlaceHolderBaseUrl {
 
         Response response = given().
                 spec(spec).
+                auth().
+                basic("admin","1234").
                 contentType(ContentType.JSON).
-                body(expectedDataMap).
-                when().
+                body(expectedDataMap).when().
                 post("/{first}");
+
         response.prettyPrint();
         // I added Status Code to use it in assertion
         expectedDataMap.put("StatusCode", 201);
